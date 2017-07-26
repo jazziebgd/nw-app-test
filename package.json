@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.4",
-    "nw-skeleton": "^1.0.0"
+    "nw-skeleton": "git+ssh://git@bitbucket.org:jazziebgd/nw-skeleton.git"
   }
 }
