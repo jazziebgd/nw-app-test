@@ -91,6 +91,12 @@ exports.appState = {
             lastLoggedValue: 0,
             operationId: null,
         },
+        messagingData: {
+            messageResponseData: {response: {}},
+            asyncMessageResponseData: {response: {}},
+            messageUuid: '',
+            asyncMessageUuid: '',
+        },
         defaultAppTestData: {
             cancelable: true,
             logProgress: false,
@@ -136,6 +142,9 @@ exports.appState = {
             messageType: 'random',
             logMessage: 1,
             logDebug: 1,
+
+            messageInProgress: false,
+            asyncMessageInProgress: false,
 
             notifications: [
                 'Notification test',

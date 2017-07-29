@@ -32,11 +32,13 @@ exports.component = {
     checkSpeedTimeout: null,
     boundMethods: {
         operationTick: null,
+        messageResponse: null,
     },
     operationId: '',
     created: function () {
         this.boundMethods = {
-            operationTick: this.operationTick.bind(this)
+            operationTick: this.operationTick.bind(this),
+            messageResponse: this.messageResponse.bind(this)
         };
     },
     updated: function(){
@@ -394,7 +396,66 @@ exports.component = {
                     console.log('button click', notificationId, buttonIndex);
                 }
             });
-        }
+        },
+        sendPingMessage: async function(e){
+            if (e && e.target && e.target.hasClass('button-disabled')){
+                return;
+            }
+            this.messageInProgress = true;
+            appState.appData.messagingData.messageResponseData = {sending: true};
+            appState.appData.messagingData.messageUuid = _appWrapper.getHelper('util').uuid();
+            _appWrapper.windowManager.win.globalEmitter.on('messageResponse', this.boundMethods.messageResponse);
+            await _appWrapper.wait(_appWrapper.getConfig('shortPauseDuration'));
+            _appWrapper.message({instruction: 'ping', uuid: appState.appData.messagingData.messageUuid, data: {test: 'test'}});
+        },
+        sendInvalidMessage: async function(e){
+            if (e && e.target && e.target.hasClass('button-disabled')){
+                return;
+            }
+            this.messageInProgress = true;
+            appState.appData.messagingData.messageResponseData = {sending: true};
+            appState.appData.messagingData.messageUuid = _appWrapper.getHelper('util').uuid();
+            _appWrapper.windowManager.win.globalEmitter.on('messageResponse', this.boundMethods.messageResponse);
+            await _appWrapper.wait(_appWrapper.getConfig('shortPauseDuration'));
+            _appWrapper.message({instruction: 'ping2', uuid: appState.appData.messagingData.messageUuid, data: {test: 'test'}});
+        },
+        clearMessageData: function(){
+            appState.appData.messagingData.messageResponseData = {respones: {}};
+        },
+        messageResponse: function(messageData){
+            if (messageData && messageData.uuid && messageData.uuid == appState.appData.messagingData.messageUuid){
+                _appWrapper.windowManager.win.globalEmitter.removeListener('messageResponse', this.boundMethods.messageResponse);
+                this.messageInProgress = false;
+                appState.appData.messagingData.messageResponseData = {response: messageData};
+                appState.appData.messagingData.messageUuid = '';
+            }
+        },
+        sendAsyncTestMessage: async function (e) {
+            if (e && e.target && e.target.hasClass('button-disabled')){
+                return;
+            }
+            appState.appData.messagingData.asyncMessageResponseData = {sending: true};
+            this.asyncMessageInProgress = true;
+            appState.appData.messagingData.asyncMessageUuid = _appWrapper.getHelper('util').uuid();
+            appState.appData.messagingData.asyncMessageResponseData = {response: await _appWrapper.asyncMessage({instruction: 'test', uuid: appState.appData.messagingData.asyncMessageUuid, data: {duration: 1000}})};
+            this.asyncMessageInProgress = false;
+            appState.appData.messagingData.asyncMessageUuid = '';
+        },
+        sendInvalidAsyncMessage: async function (e) {
+            if (e && e.target && e.target.hasClass('button-disabled')){
+                return;
+            }
+            appState.appData.messagingData.asyncMessageResponseData = {sending: true};
+            this.asyncMessageInProgress = true;
+            appState.appData.messagingData.asyncMessageUuid = _appWrapper.getHelper('util').uuid();
+            await _appWrapper.wait(_appWrapper.getConfig('shortPauseDuration'));
+            appState.appData.messagingData.asyncMessageResponseData = {response: await _appWrapper.asyncMessage({instruction: 'test2', uuid: appState.appData.messagingData.asyncMessageUuid, data: {duration: 1000}})};
+            this.asyncMessageInProgress = false;
+            appState.appData.messagingData.asyncMessageUuid = '';
+        },
+        clearAsyncMessageData: function(){
+            appState.appData.messagingData.asyncMessageResponseData = {respones: {}};
+        },
     },
     computed: {
         appState: function(){
@@ -420,6 +481,9 @@ exports.component = {
         },
         operationData: function(){
             return appState.appData.operationData;
+        },
+        messagingData: function(){
+            return appState.appData.messagingData;
         },
         dataPropertyName: function(){
             return appState.config.appConfig.appTestConfig.dataPropertyName;

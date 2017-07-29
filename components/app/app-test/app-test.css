@@ -145,3 +145,10 @@
     background: #CCCCCC;
     cursor: not-allowed;
 }
+
+.app-test-section.app-test-messaging .inspector-json-wrapper {
+    background: #CCCCCC;
+    overflow: auto;
+    text-align: left;
+    min-height: 160px;
+}

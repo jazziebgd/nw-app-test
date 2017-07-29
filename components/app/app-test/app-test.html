@@ -137,6 +137,22 @@
                 <option v-for="status in appStatuses" :value="status" v-html="status"></option>
             </select>
         </div>
+        <div class="app-test-section app-test-messaging">
+            <h2>Messaging</h2>
+            <input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="sendPingMessage" value="Send ping message" />
+            &nbsp;<input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="sendInvalidMessage" value="Send invalid ping message" />
+            &nbsp;<input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="clearMessageData" value="Clear response" />
+            <br />
+            <br />
+            <inspector-json v-bind:allowDrag="false" ref="messageResponseDataJsonInspector" v-bind:jsonData="appState.appData.messagingData.messageResponseData" v-bind:collapsed="0"></inspector-json>
+            <br />
+            <input v-bind:class="{'button-disabled': asyncMessageInProgress }" type="button" @click.prevent="sendAsyncTestMessage" value="Send async test message" />
+            &nbsp;<input v-bind:class="{'button-disabled': asyncMessageInProgress }" type="button" @click.prevent="sendInvalidAsyncMessage" value="Send invalid async test message" />
+            &nbsp;<input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="clearAsyncMessageData" value="Clear response" />
+            <br />
+            <br />
+            <inspector-json v-bind:allowDrag="false" ref="asyncMessageResponseDataJsonInspector" v-bind:jsonData="appState.appData.messagingData.asyncMessageResponseData" v-bind:collapsed="0"></inspector-json>
+        </div>
         <div class="app-test-section app-test-modal-test">
             <h2>Test modal</h2>
             <label>
