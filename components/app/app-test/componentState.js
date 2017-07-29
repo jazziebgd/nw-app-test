@@ -98,6 +98,16 @@ exports.appState = {
             asyncMessageUuid: '',
         },
         defaultAppTestData: {
+
+            minimizedSections: {
+                clearData: false,
+                messageTest: false,
+                appOperation: false,
+                messaging: false,
+                testModal: false,
+                dataJson: false,
+            },
+
             cancelable: true,
             logProgress: false,
             stepValue: 1,

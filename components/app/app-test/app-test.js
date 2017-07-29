@@ -56,18 +56,25 @@ exports.component = {
             _appWrapper.getHelper('debug').clearUserMessages();
             _appWrapper.getHelper('debug').clearDebugMessages();
         },
-        testMessage: function(){
+        testMessage: async function(){
             let types = ['debug', 'info', 'warning','error','delimiter'];
             let count = this.messageCount;
             let messageType = _.cloneDeep(this.messageType);
+            let utilHelper = _appWrapper.getHelper('util');
+            let baseMessage = 'message';
             for (let i=0; i<count; i++){
+                let randomNumber = utilHelper.getRandom(1, 6);
                 if (this.messageType == 'random'){
                     messageType = types[Math.floor(Math.random()*types.length)];
                 }
+                let message = baseMessage;
+                if (randomNumber > 4){
+                    message += ' ' + utilHelper.getRandomString(randomNumber);
+                }
                 if (this.logMessage){
-                    _appWrapper.getHelper('component').addUserMessage('message', messageType, [], false, true, true, this.logDebug);
+                    await _appWrapper.getHelper('component').addUserMessage(message, messageType, [], false, true, true, this.logDebug);
                 } else if (this.logDebug) {
-                    _appWrapper.getHelper('component').log('message', messageType, [], true, true);
+                    await _appWrapper.getHelper('component').log(message, messageType, [], true, true);
                 }
             }
         },
@@ -360,7 +367,7 @@ exports.component = {
             if (this.customNotification){
                 text = this.customNotificationText;
             }
-            _appWrapper.addNotification(text, 'info', true);
+            _appWrapper.addNotification(text, 'info', [], true);
         },
         addDesktopNotification: async function(e){
             if (e && e.target && e.target.hasClass('button-disabled')){
@@ -456,6 +463,16 @@ exports.component = {
         clearAsyncMessageData: function(){
             appState.appData.messagingData.asyncMessageResponseData = {respones: {}};
         },
+        toggleSection: function(e){
+            let target = e.target;
+            let section = target.getParentByClass('app-test-section');
+            let sectionIdentifier = section.getAttribute('data-section');
+            if (this.minimizedSections[sectionIdentifier]){
+                this.minimizedSections[sectionIdentifier] = false;
+            } else {
+                this.minimizedSections[sectionIdentifier] = true;
+            }
+        }
     },
     computed: {
         appState: function(){

@@ -49,6 +49,34 @@
     flex: 1 1 auto;
 }
 
+.app-test-section .toggle-section {
+    float: right;
+    margin-top: -25px;
+    margin-right: 10px;
+    transition: margin-top ease-in-out var(--short-animation-duration);
+}
+
+
+.app-test-section .toggle-section .restore {
+    display: none;
+}
+
+.app-test-section .toggle-section .minimize {
+    display: inline-block;
+}
+
+.app-test-section .app-test-subsection {
+    max-height: auto;
+}
+
+.app-test-section.section-minimized .toggle-section .restore {
+    display: inline-block;
+}
+
+.app-test-section.section-minimized .toggle-section .minimize {
+    display: none;
+}
+
 .app-test-inner .user-data-count {
     display: inline-flex;
     min-width: 36px;
@@ -93,7 +121,7 @@
     top: 1px;
 }
 
-.app-test-section.app-test-data {
+.app-test-section.app-test-data .app-test-subsection {
     flex: 1 0 auto;
     margin-top: 10px;
     display: flex;
@@ -102,8 +130,8 @@
     text-align: left;
 }
 
-.app-test-section.app-test-data .app-test-user-config,
-.app-test-section.app-test-data .app-test-app-info {
+.app-test-section.app-test-data .app-test-subsection .app-test-user-config,
+.app-test-section.app-test-data .app-test-subsection .app-test-app-info {
     flex: 1 1 auto;
     margin-top: 10px;
     display: flex;
