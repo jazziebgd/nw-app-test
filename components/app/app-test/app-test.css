@@ -16,11 +16,6 @@
     margin: 3px auto 5px auto;
 }
 
-.app-test-inner input {
-    cursor: pointer;
-    color: #CCCCCC;
-}
-
 .app-test-inner input[type=button] {
     transition-property: background, background-color, border-color, color;
     transition-timing-function: linear;
@@ -29,8 +24,6 @@
 
 .app-test-inner input[type=button]:hover {
     transition-duration: 0s;
-    background: #999999;
-    color: #000000;
 }
 
 .app-test-inner input.button-disabled,
@@ -154,25 +147,6 @@
     display: inline-block;
     min-width: 30px;
     text-align: right;
-}
-
-
-.theme-basic .app-test-inner input {
-    cursor: pointer;
-    color: #333333;
-}
-
-.theme-basic .app-test-inner input[type=button]:hover {
-    background: #666666;
-    color: #000000;
-}
-
-.theme-basic .app-test-inner input.button-disabled,
-.theme-basic .app-test-inner input.button-disabled:hover {
-    color: #666666;
-    border-color: #666666;
-    background: #CCCCCC;
-    cursor: not-allowed;
 }
 
 .app-test-section.app-test-messaging .inspector-json-wrapper {
