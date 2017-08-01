@@ -472,6 +472,9 @@ exports.component = {
             } else {
                 this.minimizedSections[sectionIdentifier] = true;
             }
+        },
+        toggleTransitionElement: function() {
+            appState.appData.transitionData.elementShown = !appState.appData.transitionData.elementShown;
         }
     },
     computed: {

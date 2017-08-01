@@ -177,6 +177,46 @@
                 <inspector-json v-bind:allowDrag="false" ref="asyncMessageResponseDataJsonInspector" v-bind:jsonData="appState.appData.messagingData.asyncMessageResponseData" v-bind:collapsed="0"></inspector-json>
             </div>
         </div>
+        <div class="app-test-section app-test-transitions" :class="{'section-minimized': minimizedSections.transitions}" data-section="transitions">
+            <h2>Transitions</h2>
+            <a @click.prevent="toggleSection" class="toggle-section">
+                <span class="fa fa-minus minimize"></span>
+                <span class="fa fa-plus restore"></span>
+            </a>
+            <div v-if="!minimizedSections.transitions" class="app-test-subsection">
+                <label>Transition: </label>
+                <select name="transition" v-model.literal="appState.appData.transitionData.currentTransition">
+                    <option v-for="transitionName in appState.appData.transitionData.availableTransitions" :value="transitionName" v-html="transitionName"></option>
+                </select>
+                &nbsp;
+                <template v-for="modeName in appState.appData.transitionData.availableModes">
+                    <label>
+                        <span v-if="modeName">{{ modeName }}</span>
+                        <span v-else>None</span>
+                        <input v-model.literal="appState.appData.transitionData.currentMode" type="radio" name="modeName" :value="modeName" />
+                    </label>
+                </template>
+                <br />
+                <br />
+                <input type="button" @click.prevent="toggleTransitionElement" value="Toggle element" />
+                <br />
+                <br />
+                <div class="transition-test-wrapper">
+                    <transition :name="appState.appData.transitionData.currentTransition" :mode="appState.appData.transitionData.currentMode">
+                        <div key="test-element" v-if="appState.appData.transitionData.elementShown" class="transition-test-element">
+                            <div class="transition-test-inner">
+                                Transition test element
+                            </div>
+                        </div>
+                        <div key="placeholder-element" v-if="!appState.appData.transitionData.elementShown" class="transition-test-element transition-placeholder-element">
+                            <div class="transition-test-inner">
+                                Transition placeholder element
+                            </div>
+                        </div>
+                    </transition>
+                </div>
+            </div>
+        </div>
         <div class="app-test-section app-test-modal-test" :class="{'section-minimized': minimizedSections.testModal}" data-section="testModal">
             <h2>Test modal</h2>
             <a @click.prevent="toggleSection" class="toggle-section">

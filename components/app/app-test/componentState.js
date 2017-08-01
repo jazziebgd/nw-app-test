@@ -97,6 +97,17 @@ exports.appState = {
             messageUuid: '',
             asyncMessageUuid: '',
         },
+        transitionData: {
+            availableTransitions: [],
+            availableModes: [
+                '',
+                'out-in',
+                'in-out'
+            ],
+            currentTransition: '',
+            currentMode: '',
+            elementShown: true,
+        },
         defaultAppTestData: {
 
             minimizedSections: {
@@ -104,6 +115,7 @@ exports.appState = {
                 messageTest: false,
                 appOperation: false,
                 messaging: false,
+                transitions: false,
                 testModal: false,
                 dataJson: false,
             },
