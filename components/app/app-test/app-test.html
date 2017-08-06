@@ -235,6 +235,11 @@
                 </label>
                 &nbsp;
                 <label>
+                    Cancel on close
+                    <checkbox-styled ref="cancelOnCloseModalCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.cancelOnCloseModal'" v-bind:name="'cancelOnCloseModal'" v-bind:change="styledCheckboxChange"></checkbox-styled>
+                </label>
+                &nbsp;
+                <label>
                     Auto close
                     <checkbox-styled ref="autoCloseModalCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.autoCloseModal'" v-bind:name="'autoCloseModal'" v-bind:change="styledCheckboxChange"></checkbox-styled>
                 </label>

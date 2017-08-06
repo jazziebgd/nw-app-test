@@ -173,7 +173,7 @@ exports.component = {
             let modalHelper = _appWrapper.getHelper('modal');
             let modalOptions = {
                 title: 'Test modal',
-                body: 'This is a test modal'
+                body: 'This is a test modal. You can add modal messages or see callbacks as they are called.'
             };
             if (this.animateTestModal){
                 modalOptions.animateSize = true;
@@ -182,6 +182,12 @@ exports.component = {
                 modalOptions.autoCloseTime = Math.floor(this.autoCloseDuration / 1000) * 1000;
             } else {
                 modalOptions.autoCloseTime = 0;
+            }
+
+            if (this.cancelOnCloseModal){
+                modalOptions.cancelOnClose = true;
+            } else {
+                modalOptions.cancelOnClose = false;
             }
 
             modalOptions.showConfirmButton = this.showConfirmButton;
@@ -196,28 +202,40 @@ exports.component = {
 
             let options = _.cloneDeep(modalOptions);
 
-            options.onBeforeOpen = function(){
+            options.onBeforeOpen = async () => {
                 console.log('Test modal onBeforeOpen');
+                await _appWrapper.wait(1000);
+                _appWrapper.addNotification('Test modal onBeforeOpen', 'info', '', true, {immediate: true});
             };
 
-            options.onOpen = function(){
+            options.onOpen = async () => {
                 console.log('Test modal onOpen');
+                await _appWrapper.wait(1000);
+                _appWrapper.addNotification('Test modal onOpen', 'info', '', true, {immediate: true});
             };
 
-            options.onBeforeClose = function(){
+            options.onBeforeClose = async () => {
                 console.log('Test modal onBeforeClose');
+                await _appWrapper.wait(1000);
+                _appWrapper.addNotification('Test modal onBeforeClose', 'info', '', true, {immediate: true});
             };
 
-            options.onClose = function(){
+            options.onClose = async () => {
                 console.log('Test modal onClose');
+                await _appWrapper.wait(1000);
+                _appWrapper.addNotification('Test modal onClose', 'info', '', true, {immediate: true});
             };
 
-            options.onConfirm = function(){
+            options.onConfirm = async () => {
                 console.log('Test modal onConfirm');
+                await _appWrapper.wait(1000);
+                _appWrapper.addNotification('Test modal onConfirm', 'info', '', true, {immediate: true});
             };
 
-            options.onCancel = function(){
+            options.onCancel = async () => {
                 console.log('Test modal onCancel');
+                await _appWrapper.wait(1000);
+                _appWrapper.addNotification('Test modal onCancel', 'info', '', true, {immediate: true});
             };
 
             _appWrapper._confirmModalAction = modalHelper.closeCurrentModalDelayed.bind(modalHelper, 1000, 'Confirming...');

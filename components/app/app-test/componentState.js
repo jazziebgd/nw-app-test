@@ -178,6 +178,7 @@ exports.appState = {
             customNotificationText: 'My notification',
 
             animateTestModal: false,
+            cancelOnCloseModal: false,
             autoCloseModal: false,
             autoCloseDuration: 5000,
             autoCloseDurationMin: 5000,

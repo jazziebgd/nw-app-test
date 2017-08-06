@@ -32,7 +32,7 @@ exports.component = {
     methods: {
         addModalMessage: function(){
             let types = ['info', 'warning', 'error'];
-            let messages = ['test', 'testing', 'more testing', 'another test', 'one more test'];
+            let messages = ['test', 'testing', 'more testing', 'another puny test', 'one more test'];
             _appWrapper.getHelper('modal').addModalMessage({message: _.sample(messages), type: _.sample(types)});
         }
     },
