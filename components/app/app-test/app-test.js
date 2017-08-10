@@ -44,6 +44,15 @@ exports.component = {
     updated: function(){
         this.saveUserData();
     },
+    destroyed: function(){
+        this.boundMethods.operationTick = null;
+        this.boundMethods.messageResponse = null;
+        this.boundMethods = null;
+        this.checkSpeedTimeout = null;
+        this.tickTimeout = null;
+        this.finishTimeout = null;
+        this.operationId = null;
+    },
     data: function () {
         let data = appState.userData[appState.config.appConfig.appTestConfig.dataPropertyName];
         return data;
@@ -352,7 +361,7 @@ exports.component = {
             newUserData[appState.config.appConfig.appTestConfig.dataPropertyName] = appState.appData[appState.config.appConfig.appTestConfig.defaultDataPropertyName];
             _appWrapper.getHelper('userData').saveUserData(newUserData);
             _appWrapper.getHelper('modal').closeCurrentModal();
-            _appWrapper.addUserMessage('User data reset.', 'info', []);
+            // _appWrapper.addUserMessage('User data reset.', 'info', []);
         },
         saveUserData: async function(e, noNotification) {
             if (e && e.target && e.target.hasClass('button-disabled')){
@@ -361,23 +370,23 @@ exports.component = {
             let userDataHelper = _appWrapper.getHelper('userData');
             let saved = await userDataHelper.saveUserData(appState.userData);
             if (saved && !noNotification){
-                _appWrapper.addUserMessage('User data saved.', 'info', []);
+                // _appWrapper.addUserMessage('User data saved.', 'info', []);
             }
         },
         userDataChanged: function(){
             let utilHelper = _appWrapper.getHelper('util');
-            var currentData = _.cloneDeep(this.$data);
-            var oldData = _.cloneDeep(appState.userData[appState.config.appConfig.appTestConfig.dataPropertyName]);
-            var dataDiff = utilHelper.difference(oldData, currentData);
+            let currentData = _.cloneDeep(this.$data);
+            let oldData = _.cloneDeep(appState.userData[appState.config.appConfig.appTestConfig.dataPropertyName]);
+            let dataDiff = utilHelper.difference(oldData, currentData);
             return Object.keys(dataDiff).length;
         },
         defaultDataChanged: function(){
             let utilHelper = _appWrapper.getHelper('util');
 
-            var currentDataMap = utilHelper.propertyValuesMap(_.cloneDeep(this.$data));
+            let currentDataMap = utilHelper.propertyValuesMap(_.cloneDeep(this.$data));
             let savedData = _.cloneDeep(appState.appData[appState.config.appConfig.appTestConfig.defaultDataPropertyName]);
             let oldDataMap = utilHelper.propertyValuesMap(savedData);
-            var keyMapDiff = utilHelper.difference(oldDataMap, currentDataMap);
+            let keyMapDiff = utilHelper.difference(oldDataMap, currentDataMap);
             return Object.keys(keyMapDiff).length;
         },
         addNotification: function(){
