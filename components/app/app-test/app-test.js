@@ -361,7 +361,7 @@ exports.component = {
             newUserData[appState.config.appConfig.appTestConfig.dataPropertyName] = appState.appData[appState.config.appConfig.appTestConfig.defaultDataPropertyName];
             _appWrapper.getHelper('userData').saveUserData(newUserData);
             _appWrapper.getHelper('modal').closeCurrentModal();
-            // _appWrapper.addUserMessage('User data reset.', 'info', []);
+            _appWrapper.addUserMessage('User data reset.', 'info', []);
         },
         saveUserData: async function(e, noNotification) {
             if (e && e.target && e.target.hasClass('button-disabled')){
@@ -370,7 +370,7 @@ exports.component = {
             let userDataHelper = _appWrapper.getHelper('userData');
             let saved = await userDataHelper.saveUserData(appState.userData);
             if (saved && !noNotification){
-                // _appWrapper.addUserMessage('User data saved.', 'info', []);
+                _appWrapper.addUserMessage('User data saved.', 'info', []);
             }
         },
         userDataChanged: function(){
