@@ -5,14 +5,14 @@
     "main": "index.js",
     "repository": {
         "type": "git",
-        "url": "git+ssh://git@github.com/jazziebgd/nw-app-test.git"
+        "url": "git+ssh://git@github.com/nwfw/nw-app-test.git"
     },
     "scripts": {},
     "author": "Dino Ivankov <dinoivankov@gmail.com>",
     "license": "MIT",
-    "homepage": "https://github.com/jazziebgd/nw-app-test",
+    "homepage": "https://github.com/nwfw/nw-app-test",
     "dependencies": {
         "lodash": "^4.17.4",
-        "nw-skeleton": "^1.2.2"
+        "nw-skeleton": "^1.2.3"
     }
 }
