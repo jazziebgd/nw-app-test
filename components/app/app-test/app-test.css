@@ -4,6 +4,7 @@
     flex-flow: column;
     flex: 1 0 auto;
     overflow: auto;
+    font-size: 0.8rem;
 }
 
 .app-test-inner h1 {

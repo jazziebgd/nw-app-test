@@ -1,70 +1,58 @@
 <div class="app-test">
     <div class="app-test-inner">
-        <h1>Default app-test view</h1>
+        <h1>{{ translate('Default app-test view') }}</h1>
         <div class="app-test-section app-test-clear-data" :class="{'section-minimized': minimizedSections.clearData}" data-section="clearData">
-            <h2>User data</h2>
+            <h2>{{ translate('User data') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
                 <span class="fa fa-minus minimize"></span>
                 <span class="fa fa-plus restore"></span>
             </a>
             <div v-if="!minimizedSections.clearData" class="app-test-subsection">
-                There
-                <span class="user-data-count">
-                    <span>
-                        {{ hasCustomData != 1 ? 'are' : 'is' }}
-                    </span>
-                    <span>
-                        &nbsp;{{ hasCustomData > 0 ? hasCustomData : 'no' }}
-                    </span>
-                </span>
-                saved user data
-                <span class="user-data-variables">
-                    variable{{ hasCustomData != 1 ? 's' : '' }}.
-                </span>
+                {{ hasCustomData == 0 ? translate('There are no saved user data variables') : '' }}
+                {{ hasCustomData == 1 ? translate('There is one saved user data variable') : '' }}
+                {{ hasCustomData > 1 ? translate('There are {1} saved user data variables', '', [hasCustomData]) : '' }}
                 &nbsp;
-                <input v-bind:class="{'button-disabled': !hasCustomData}" type="button" @click.prevent="resetUserData" value="Reset user data" />
-                &nbsp;
-                <input v-if="false" v-bind:class="{'button-disabled': !savedDataChanged}" type="button" @click.prevent="saveUserData" value="Save user data" />
+                <input v-bind:class="{'button-disabled': !hasCustomData}" type="button" @click.prevent="resetUserData" :value="translate('Reset user data')" />
             </div>
         </div>
         <div class="app-test-section app-test-message-test" :class="{'section-minimized': minimizedSections.messageTest}" data-section="messageTest">
-            <h2>Test user messages, debug and notifications</h2>
+            <h2>{{ translate('Test user messages, debug and notifications') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
                 <span class="fa fa-minus minimize"></span>
                 <span class="fa fa-plus restore"></span>
             </a>
             <div v-if="!minimizedSections.messageTest" class="app-test-subsection">
-                <label>Count: </label>
+                <label>{{ translate('Count')}}: </label>
                 <select name="count" v-nwmodel.number="messageCount">
                     <option v-for="countItem in messageCounts" :value="countItem" v-html="countItem"></option>
                 </select>
                 &nbsp;
-                <label>Type: </label>
+                <label>{{ translate('Type') }}: </label>
                 <select name="type" v-nwmodel="messageType">
                     <option v-for="type in messageTypes" :value="type" v-html="type"></option>
                 </select>
                 &nbsp;
                 <label>
-                    User message:
+                    {{ translate('User message') }}:
                     <checkbox-styled ref="logMessageCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.logMessage'" v-bind:name="'logMessage'" v-bind:change="styledCheckboxChange"></checkbox-styled>
                 </label>
                 &nbsp;
                 <label>
-                    Debug message:
+                    {{ translate('Debug message') }}:
                     <checkbox-styled ref="logDebugCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.logDebug'" v-bind:name="'logDebug'" v-bind:change="styledCheckboxChange"></checkbox-styled>
                 </label>
-                &nbsp; <input type="button" @click.prevent="testMessage" :value="'log X ' + messageCount" v-bind:class="{'button-disabled': !(logDebug || logMessage)}" />
-                &nbsp; <input v-bind:class="{'button-disabled': !(appState.debugMessages.length + appState.userMessages.length)}" type="button" @click.prevent="clearMessages" value="Clear all" />
+                &nbsp; <input type="button" @click.prevent="testMessage" :value="translate('log X {1}', '', [messageCount])" v-bind:class="{'button-disabled': !(logDebug || logMessage)}" />
+                &nbsp; <input v-bind:class="{'button-disabled': !(appState.debugMessages.length + appState.userMessages.length)}" type="button" @click.prevent="clearMessages" :value="translate('Clear all')" />
                 <br />
                 <br />
                 <label>
-                    Custom notification
+                    {{ translate('Custom notification') }}
                     <checkbox-styled ref="customNotificationCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.customNotification'" v-bind:name="'customNotification'" v-bind:change="styledCheckboxChange"></checkbox-styled>
                 </label>
                 &nbsp;
                 <span v-if="!customNotification">
                     <label>
-                        Notification text:
+                        {{ translate('Notification text') }}:
                     </label>
                     <select class="notification-text" v-nwmodel="notificationText">
                         <option v-for="notification in notifications" :value="notification" v-html="notification"></option>
@@ -72,18 +60,18 @@
                 </span>
                 <span v-else>
                     <label>
-                        Notification text:
+                        {{ translate('Notification text') }}:
                     </label>
                     <input class="notification-text" name="customNotificationText" type="text" v-nwmodel.trim="customNotificationText"/>
                 </span>
                 &nbsp;
-                <input v-bind:class="{'button-disabled': customNotification && !customNotificationText}" type="button" @click.prevent="addNotification" value="Add notification" />
+                <input v-bind:class="{'button-disabled': customNotification && !customNotificationText}" type="button" @click.prevent="addNotification" :value="translate('Add notification')" />
                 &nbsp;
-                <input type="button" @click.prevent="addDesktopNotification" value="Add desktop notification" />
+                <input type="button" @click.prevent="addDesktopNotification" :value="translate('Add desktop notification')" />
             </div>
         </div>
         <div class="app-test-section app-test-operation-test" :class="{'section-minimized': minimizedSections.appOperation}" data-section="appOperation">
-            <h2>Test app operation and statuses</h2>
+            <h2>{{ translate('Test app operation and statuses') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
                 <span class="fa fa-minus minimize"></span>
                 <span class="fa fa-plus restore"></span>
@@ -91,15 +79,15 @@
             <div v-if="!minimizedSections.appOperation" class="app-test-subsection">
                 <div class="app-test-operation-info">
                     <div class="app-test-operation-info-section app-test-operation-info-progress" v-bind:class="{'highlighted': operationData.operationStatusChanging}">
-                        In progress: <span class="fa" v-bind:class="{'fa-square-o': !operationInProgress, 'fa-check-square-o': operationInProgress}"></span>&nbsp;
+                        {{ translate('In progress') }}: <span class="fa" v-bind:class="{'fa-square-o': !operationInProgress, 'fa-check-square-o': operationInProgress}"></span>&nbsp;
                     </div>
                     <div class="app-test-operation-info-section app-test-operation-info-simulating" v-bind:class="{'highlighted': operationData.simulationStatusChanging}">
-                        Simulating: <span class="fa" v-bind:class="{'fa-square-o': !operationData.isSimulating, 'fa-check-square-o': operationData.isSimulating}"></span>&nbsp;
+                        {{ translate('Simulating') }}: <span class="fa" v-bind:class="{'fa-square-o': !operationData.isSimulating, 'fa-check-square-o': operationData.isSimulating}"></span>&nbsp;
                     </div>
                 </div>
                 <br />
                 <label>
-                    Operation value (length)
+                    {{ translate('Operation value (length)') }}
                 </label>
                 &nbsp;
                 <input v-nwmodel.number="maxOperationValue" class="range-input" type="range" :min="1" :max="maxOperationValueLimit" step="1" />
@@ -107,7 +95,7 @@
                 <br />
                 <br />
                 <label>
-                    Cancelable:
+                    {{ translate('Cancelable') }}:
                     <template v-if="!appState.appOperation.operationActive">
                         <checkbox-styled ref="cancelableCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.cancelable'" v-bind:name="'cancelable'" v-bind:change="styledCheckboxChange"></checkbox-styled>
                     </template>
@@ -117,7 +105,7 @@
                 </label>
                 &nbsp;
                 <label>
-                    Log progress:
+                    {{ translate('Log progress') }}:
                     <template v-if="!appState.appOperation.operationActive">
                         <checkbox-styled ref="logProgressCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.logProgress'" v-bind:name="'logProgress'" v-bind:change="styledCheckboxChange"></checkbox-styled>
                     </template>
@@ -125,66 +113,66 @@
                         <span class="fa" v-bind:class="{'fa-square-o' : !logProgress, 'fa-check-square-o': logProgress}"></span>
                     </template>
                 </label>
-                &nbsp; <input v-bind:class="{'button-disabled': appState.appOperation.operationActive}" type="button" @click.prevent="operationStart" value="operationStart" />
-                &nbsp; <input v-bind:class="{'button-disabled': !operationInProgress}" type="button" @click.prevent="operationFinish" value="Finish" />
+                &nbsp; <input v-bind:class="{'button-disabled': appState.appOperation.operationActive}" type="button" @click.prevent="operationStart" :value="translate('operationStart')" />
+                &nbsp; <input v-bind:class="{'button-disabled': !operationInProgress}" type="button" @click.prevent="operationFinish" :value="translate('Finish')" />
                 <br />
                 <br />
-                &nbsp; <input v-bind:class="{'button-disabled': !operationInProgress || operationData.isSimulating}" type="button" @click.prevent="simulateProgress" value="Simulate progress" />
-                &nbsp; <input v-bind:class="{'button-disabled': !operationData.isSimulating }" type="button" @click.prevent="stopSimulating" value="Stop simulating" />
+                &nbsp; <input v-bind:class="{'button-disabled': !operationInProgress || operationData.isSimulating}" type="button" @click.prevent="simulateProgress" :value="translate('Simulate progress')" />
+                &nbsp; <input v-bind:class="{'button-disabled': !operationData.isSimulating }" type="button" @click.prevent="stopSimulating" :value="translate('Stop simulating')" />
                 &nbsp;
                 <label>
-                    Speed
+                    {{ translate('Speed') }}
                 </label>
                 &nbsp;
                 <input v-nwmodel.number="speed" name="speedRange" class="range-input" type="range" :min="minSpeed" :max="maxSpeed - 1" step="1" />
                 <input name="speed" type="number" v-nwmodel.number="speed" :min="minSpeed" :max="maxSpeed - 1" />
                 <br />
                 <br />
-                <label>Step value: </label>
+                <label>{{ translate('Step value') }}: </label>
                 <select name="stepValue" v-nwmodel="stepValue">
                     <option v-for="value in stepValues" :value="value" v-html="value"></option>
                 </select>
                 &nbsp; &nbsp; &nbsp;
-                &nbsp; <input v-bind:class="{'button-disabled': !operationInProgress || parseInt(appState.progressData.percentComplete, 10) >= (100 - stepValue)}" type="button" @click.prevent="operationIncrement" :value="'Increment progress (+' + stepValue + ')'" />
-                &nbsp; <input v-bind:class="{'button-disabled': !operationInProgress || parseInt(appState.progressData.percentComplete, 10) <= stepValue}" type="button" @click.prevent="operationDecrement" :value="'Decrement progress (-' + stepValue + ')'" />
+                &nbsp; <input v-bind:class="{'button-disabled': !operationInProgress || parseInt(appState.progressData.percentComplete, 10) >= (100 - stepValue)}" type="button" @click.prevent="operationIncrement" :value="translate('Increment progress (+{1})', '', [stepValue])" />
+                &nbsp; <input v-bind:class="{'button-disabled': !operationInProgress || parseInt(appState.progressData.percentComplete, 10) <= stepValue}" type="button" @click.prevent="operationDecrement" :value="translate('Decrement progress (-{1})', '', [stepValue])" />
                 <br />
                 <br />
-                <label>App status: </label>
+                <label>{{ translate('App status') }}: </label>
                 <select name="status" v-model.literal="appState.status.appStatus">
                     <option v-for="status in appStatuses" :value="status" v-html="status"></option>
                 </select>
             </div>
         </div>
         <div class="app-test-section app-test-messaging" :class="{'section-minimized': minimizedSections.messaging}" data-section="messaging">
-            <h2>Messaging</h2>
+            <h2>{{ translate('Messaging') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
                 <span class="fa fa-minus minimize"></span>
                 <span class="fa fa-plus restore"></span>
             </a>
             <div v-if="!minimizedSections.messaging" class="app-test-subsection">
-                <input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="sendPingMessage" value="Send ping message" />
-                &nbsp;<input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="sendInvalidMessage" value="Send invalid ping message" />
-                &nbsp;<input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="clearMessageData" value="Clear response" />
+                <input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="sendPingMessage" :value="translate('Send ping message')" />
+                &nbsp;<input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="sendInvalidMessage" :value="translate('Send invalid ping message')" />
+                &nbsp;<input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="clearMessageData" :value="translate('Clear response')" />
                 <br />
                 <br />
                 <inspector-json v-bind:allowDrag="false" ref="messageResponseDataJsonInspector" v-bind:jsonData="appState.appData.messagingData.messageResponseData" v-bind:collapsed="0"></inspector-json>
                 <br />
-                <input v-bind:class="{'button-disabled': asyncMessageInProgress }" type="button" @click.prevent="sendAsyncTestMessage" value="Send async test message" />
-                &nbsp;<input v-bind:class="{'button-disabled': asyncMessageInProgress }" type="button" @click.prevent="sendInvalidAsyncMessage" value="Send invalid async test message" />
-                &nbsp;<input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="clearAsyncMessageData" value="Clear response" />
+                <input v-bind:class="{'button-disabled': asyncMessageInProgress }" type="button" @click.prevent="sendAsyncTestMessage" :value="translate('Send async test message')" />
+                &nbsp;<input v-bind:class="{'button-disabled': asyncMessageInProgress }" type="button" @click.prevent="sendInvalidAsyncMessage" :value="translate('Send invalid async test message')" />
+                &nbsp;<input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="clearAsyncMessageData" :value="translate('Clear response')" />
                 <br />
                 <br />
                 <inspector-json v-bind:allowDrag="false" ref="asyncMessageResponseDataJsonInspector" v-bind:jsonData="appState.appData.messagingData.asyncMessageResponseData" v-bind:collapsed="0"></inspector-json>
             </div>
         </div>
         <div class="app-test-section app-test-transitions" :class="{'section-minimized': minimizedSections.transitions}" data-section="transitions">
-            <h2>Transitions</h2>
+            <h2>{{ translate('Transitions') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
                 <span class="fa fa-minus minimize"></span>
                 <span class="fa fa-plus restore"></span>
             </a>
             <div v-if="!minimizedSections.transitions" class="app-test-subsection">
-                <label>Transition: </label>
+                <label>{{ translate('Transition') }}: </label>
                 <select name="transition" v-model.literal="appState.appData.transitionData.currentTransition">
                     <option v-for="transitionName in appState.appData.transitionData.availableTransitions" :value="transitionName" v-html="transitionName"></option>
                 </select>
@@ -198,19 +186,19 @@
                 </template>
                 <br />
                 <br />
-                <input type="button" @click.prevent="toggleTransitionElement" value="Toggle element" />
+                <input type="button" @click.prevent="toggleTransitionElement" :value="translate('Toggle element')" />
                 <br />
                 <br />
                 <div class="transition-test-wrapper">
                     <transition :name="appState.appData.transitionData.currentTransition" :mode="appState.appData.transitionData.currentMode">
                         <div key="test-element" v-if="appState.appData.transitionData.elementShown" class="transition-test-element">
                             <div class="transition-test-inner">
-                                Transition test element
+                                {{ translate('Transition test element') }}
                             </div>
                         </div>
                         <div key="placeholder-element" v-if="!appState.appData.transitionData.elementShown" class="transition-test-element transition-placeholder-element">
                             <div class="transition-test-inner">
-                                Transition placeholder element
+                                {{ translate('Transition placeholder element') }}
                             </div>
                         </div>
                     </transition>
@@ -218,35 +206,35 @@
             </div>
         </div>
         <div class="app-test-section app-test-modal-test" :class="{'section-minimized': minimizedSections.testModal}" data-section="testModal">
-            <h2>Test modal</h2>
+            <h2>{{ translate('Test modal') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
                 <span class="fa fa-minus minimize"></span>
                 <span class="fa fa-plus restore"></span>
             </a>
             <div v-if="!minimizedSections.testModal" class="app-test-subsection">
                 <label>
-                    Animate size:
+                    {{ translate('Animate size') }}:
                     <checkbox-styled ref="animateTestModalCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.animateTestModal'" v-bind:name="'animateTestModal'" v-bind:change="styledCheckboxChange"></checkbox-styled>
                 </label>
                 &nbsp;
                 <label>
-                    Show close link
+                    {{ translate('Show close link') }}
                     <checkbox-styled ref="showCloseLinkCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.showCloseLink'" v-bind:name="'showCloseLink'" v-bind:change="styledCheckboxChange"></checkbox-styled>
                 </label>
                 &nbsp;
                 <label>
-                    Cancel on close
+                    {{ translate('Cancel on close') }}
                     <checkbox-styled ref="cancelOnCloseModalCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.cancelOnCloseModal'" v-bind:name="'cancelOnCloseModal'" v-bind:change="styledCheckboxChange"></checkbox-styled>
                 </label>
                 &nbsp;
                 <label>
-                    Auto close
+                    {{ translate('Auto close') }}
                     <checkbox-styled ref="autoCloseModalCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.autoCloseModal'" v-bind:name="'autoCloseModal'" v-bind:change="styledCheckboxChange"></checkbox-styled>
                 </label>
                 <template v-if="autoCloseModal">
                     <br />
                     <label>
-                        Auto close time (seconds)
+                        {{ translate('Auto close time (seconds)') }}
                     </label>
                     &nbsp;
                     <input v-nwmodel="autoCloseDuration" class="range-input" type="range" :min="autoCloseDurationMin" :max="autoCloseDurationMax" step="autoCloseDurationStep" @updatemodel="onUpdateModel" />
@@ -257,53 +245,53 @@
                 <br />
                 <br />
                 <label>
-                    Show confirm button
+                    {{ translate('Show confirm button') }}
                     <checkbox-styled ref="showConfirmButtonCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.showConfirmButton'" v-bind:name="'showConfirmButton'" v-bind:change="modalCheckboxChange"></checkbox-styled>
                 </label>
                 &nbsp;
                 <label>
-                    Confirm disabled
+                    {{ translate('Confirm disabled') }}
                     <checkbox-styled ref="confirmDisabledCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.confirmDisabled'" v-bind:name="'confirmDisabled'" v-bind:change="modalCheckboxChange"></checkbox-styled>
                 </label>
                 &nbsp;
                 <label>
-                    Confirm selected
+                    {{ translate('Confirm selected') }}
                     <checkbox-styled ref="confirmSelectedCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.confirmSelected'" v-bind:name="'confirmSelected'" v-bind:change="modalCheckboxChange"></checkbox-styled>
                 </label>
                 <br />
                 <br />
                 <label>
-                    Show cancel button
+                    {{ translate('Show cancel button') }}
                     <checkbox-styled ref="showCancelButtonCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.showCancelButton'" v-bind:name="'showCancelButton'" v-bind:change="modalCheckboxChange"></checkbox-styled>
                 </label>
                 &nbsp;
                 <label>
-                    Cancel disabled
+                    {{ translate('Cancel disabled') }}
                     <checkbox-styled ref="cancelDisabledCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.cancelDisabled'" v-bind:name="'cancelDisabled'" v-bind:change="modalCheckboxChange"></checkbox-styled>
                 </label>
                 &nbsp;
                 <label>
-                    Cancel selected
+                    {{ translate('Cancel selected') }}
                     <checkbox-styled ref="cancelSelectedCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.cancelSelected'" v-bind:name="'cancelSelected'" v-bind:change="modalCheckboxChange"></checkbox-styled>
                 </label>
                 <br />
                 <br />
-                <input type="button" @click.prevent="openTestModal" value="Open test modal" />
+                <input type="button" @click.prevent="openTestModal" :value="translate('Open test modal')" />
             </div>
         </div>
         <div class="app-test-section app-test-data" :class="{'section-minimized': minimizedSections.dataJson}" data-section="dataJson">
-            <h2>Data inspector</h2>
+            <h2>{{ translate('Data inspector') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
                 <span class="fa fa-minus minimize"></span>
                 <span class="fa fa-plus restore"></span>
             </a>
             <div v-if="!minimizedSections.dataJson" class="app-test-subsection">
                 <div class="app-test-user-config">
-                    <h2>User config</h2>
+                    <h2>{{ translate('User config') }}</h2>
                     <inspector-json v-bind:allowDrag="false" ref="userConfigInspector" v-bind:jsonData="appState.userConfig" v-bind:collapsed="1"></inspector-json>
                 </div>
                 <div class="app-test-app-info">
-                    <h2>App info</h2>
+                    <h2>{{ translate('App info') }}</h2>
                     <inspector-json v-bind:allowDrag="false" ref="appInfoInspector" v-bind:jsonData="appInfoJsonData" v-bind:collapsed="1"></inspector-json>
                 </div>
             </div>

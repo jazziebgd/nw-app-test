@@ -351,17 +351,24 @@ exports.component = {
             let modalHelper = _appWrapper.getHelper('modal');
             modalHelper.confirm('Are you sure?', 'Resetting all user data', 'Yes', 'No', this.doResetUserData);
         },
-        doResetUserData: function() {
-            _appWrapper.getHelper('userData').clearUserData();
+        doResetUserData: async function() {
+            let userDataHelper = _appWrapper.getHelper('userData');
+            let userData = _.cloneDeep(appState.userData);
+            let saved = true;
+            if (userData && userData[appState.config.appConfig.appTestConfig.dataPropertyName]){
+                delete userData[appState.config.appConfig.appTestConfig.dataPropertyName];
+                saved = await userDataHelper.saveUserData(userData);
+            }
             let keys = Object.keys(this.$data);
             for (let i=0; i<keys.length; i++){
                 this[keys[i]] = appState.appData[appState.config.appConfig.appTestConfig.defaultDataPropertyName][keys[i]];
             }
-            let newUserData = {};
-            newUserData[appState.config.appConfig.appTestConfig.dataPropertyName] = appState.appData[appState.config.appConfig.appTestConfig.defaultDataPropertyName];
-            _appWrapper.getHelper('userData').saveUserData(newUserData);
             _appWrapper.getHelper('modal').closeCurrentModal();
-            _appWrapper.addUserMessage('User data reset.', 'info', []);
+            if (saved){
+                _appWrapper.addUserMessage('User data reset.', 'info', []);
+            } else {
+                _appWrapper.addUserMessage('User data not reset.', 'warning', []);
+            }
         },
         saveUserData: async function(e, noNotification) {
             if (e && e.target && e.target.hasClass('button-disabled')){
