@@ -24,6 +24,8 @@ exports.data = {
     'Log progress': 'Логуј операцију',
     'Messaging': 'Поруке',
     'Notification text': 'Текст нотификације',
+    'Open file manager modal': 'Прикажи фајл менаџер модал',
+    'File manager': 'Фајл менаџер',
     'Open test modal': 'Отвори модал',
     'Operation value (length)': 'Дужина операција',
     'Reset user data': 'Ресетуј корисничке податке',
@@ -54,5 +56,6 @@ exports.data = {
     'User data': 'Кориснички подаци',
     'User message': 'Корисничка порука',
     'log X {1}': 'логуј X {1}',
-    'operationStart': 'Стартуј'
+    'operationStart': 'Стартуј',
+    'Pass to main': 'Проследи у главну скрипту'
 };

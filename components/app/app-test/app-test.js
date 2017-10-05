@@ -6,9 +6,10 @@
  */
 
 const _ = require('lodash');
-
+// const path = require('path');
 var _appWrapper = window.getAppWrapper();
 var appState = _appWrapper.getAppState();
+
 
 /**
  * App main component
@@ -85,6 +86,10 @@ exports.component = {
                 } else if (this.logDebug) {
                     await _appWrapper.getHelper('component').log(message, messageType, [], true, true);
                 }
+                if (this.passToMain){
+                    await _appWrapper.message({instruction: 'log', data: {type: messageType, message: message, force: true}});
+                }
+                await _appWrapper.wait(100);
             }
         },
         operationStart: function(e){
@@ -251,6 +256,9 @@ exports.component = {
             _appWrapper._cancelModalAction = modalHelper.closeCurrentModalDelayed.bind(modalHelper, 1000, 'Cancelling...');
 
             modalHelper.openModal('testModal', options);
+        },
+        openFileManagerModal: function() {
+            _appWrapper.app.fileManagerHelper.openFileManagerModal();
         },
         styledCheckboxChange: function (e){
             let cb = e.target;

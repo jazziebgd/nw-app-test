@@ -41,6 +41,11 @@
                     {{ translate('Debug message') }}:
                     <checkbox-styled ref="logDebugCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.logDebug'" v-bind:name="'logDebug'" v-bind:change="styledCheckboxChange"></checkbox-styled>
                 </label>
+                &nbsp;
+                <label>
+                    {{ translate('Pass to main') }}:
+                    <checkbox-styled ref="passToMainCheckbox" v-bind:modelProperty="'appState.userData.' + dataPropertyName + '.passToMain'" v-bind:name="'passToMain'" v-bind:change="styledCheckboxChange"></checkbox-styled>
+                </label>
                 &nbsp; <input type="button" @click.prevent="testMessage" :value="translate('log X {1}', '', [messageCount])" v-bind:class="{'button-disabled': !(logDebug || logMessage)}" />
                 &nbsp; <input v-bind:class="{'button-disabled': !(appState.debugMessages.length + appState.userMessages.length)}" type="button" @click.prevent="clearMessages" :value="translate('Clear all')" />
                 <br />
@@ -79,10 +84,10 @@
             <div v-if="!minimizedSections.appOperation" class="app-test-subsection">
                 <div class="app-test-operation-info">
                     <div class="app-test-operation-info-section app-test-operation-info-progress" v-bind:class="{'highlighted': operationData.operationStatusChanging}">
-                        {{ translate('In progress') }}: <span class="fa" v-bind:class="{'fa-square-o': !operationInProgress, 'fa-check-square-o': operationInProgress}"></span>&nbsp;
+                        {{ translate('In progress') }}: <span class="fa" v-bind:class="{'fa-square-o': !operationInProgress, 'fa-check-square-o': operationInProgress}"></span>
                     </div>
                     <div class="app-test-operation-info-section app-test-operation-info-simulating" v-bind:class="{'highlighted': operationData.simulationStatusChanging}">
-                        {{ translate('Simulating') }}: <span class="fa" v-bind:class="{'fa-square-o': !operationData.isSimulating, 'fa-check-square-o': operationData.isSimulating}"></span>&nbsp;
+                        {{ translate('Simulating') }}: <span class="fa" v-bind:class="{'fa-square-o': !operationData.isSimulating, 'fa-check-square-o': operationData.isSimulating}"></span>
                     </div>
                 </div>
                 <br />
@@ -278,6 +283,18 @@
                 <br />
                 <input type="button" @click.prevent="openTestModal" :value="translate('Open test modal')" />
             </div>
+        </div>
+        <div class="app-test-section app-test-file-manager" :class="{'section-minimized': minimizedSections.fileManager}" data-section="fileManager">
+            <h2>{{ translate('File manager') }}</h2>
+            <a @click.prevent="toggleSection" class="toggle-section">
+                <span class="fa fa-minus minimize"></span>
+                <span class="fa fa-plus restore"></span>
+            </a>
+            <div v-if="!minimizedSections.fileManager" class="app-test-subsection">
+                <file-manager v-bind:options=" {rootDir: '/Users/dino/prg/node', currentDir: '/Users/dino/prg/node/nw/nw-app-example/test'}"></file-manager>
+                <input type="button" @click.prevent="openFileManagerModal" class="fm-modal-button" :value="translate('Open file manager modal')" />
+            </div>
+
         </div>
         <div class="app-test-section app-test-data" :class="{'section-minimized': minimizedSections.dataJson}" data-section="dataJson">
             <h2>{{ translate('Data inspector') }}</h2>

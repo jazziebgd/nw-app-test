@@ -118,6 +118,7 @@ exports.appState = {
                 transitions: false,
                 testModal: false,
                 dataJson: false,
+                fileManager: false,
             },
 
             cancelable: true,
@@ -165,6 +166,7 @@ exports.appState = {
             messageType: 'random',
             logMessage: 1,
             logDebug: 1,
+            passToMain: 0,
 
             messageInProgress: false,
             asyncMessageInProgress: false,

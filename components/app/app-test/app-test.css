@@ -11,10 +11,12 @@
     flex: 0 1 auto;
     margin: 5px auto;
     padding: 0px;
+    font-size: 1.3rem;
 }
 
 .app-test-inner h2 {
     margin: 3px auto 5px auto;
+    font-size: 1.1rem;
 }
 
 .app-test-inner input[type=button] {
@@ -64,12 +66,31 @@
     max-height: auto;
 }
 
+.app-test-section.section-minimized {
+    padding: 0;
+    margin: 1px 0;
+}
+
+.app-test-section.section-minimized:hover {
+    background: #999999;
+}
+
+.app-test-section.section-minimized h2 {
+    padding: 0;
+    margin: 0;
+    font-size: 0.8rem;
+}
+
 .app-test-section.section-minimized .toggle-section .restore {
     display: inline-block;
 }
 
 .app-test-section.section-minimized .toggle-section .minimize {
     display: none;
+}
+
+.app-test-section.section-minimized .toggle-section {
+    margin-top: -15px;
 }
 
 .app-test-inner .user-data-count {
@@ -101,6 +122,11 @@
     transition-property: border-color, background-color, color, text-shadow;
     transition-duration: var(--short-animation-duration);
     transition-timing-function: ease-in-out;
+}
+
+.app-test-operation-info-section.app-test-operation-info-progress,
+.app-test-operation-info-section.app-test-operation-info-simulating {
+    text-align: right;
 }
 
 .app-test-section.app-test-operation-test .app-test-operation-info .app-test-operation-info-section.highlighted {
@@ -195,4 +221,15 @@
 
 .app-test-inner .transition-test-wrapper .transition-test-element.transition-placeholder-element .transition-test-inner {
     background: #663333;
+}
+
+.app-test-modal-test label {
+    white-space: nowrap;
+}
+.app-test-file-manager {
+    padding: 0 10px;
+}
+
+.fm-modal-button {
+    margin: 10px auto;
 }

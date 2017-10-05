@@ -24,6 +24,8 @@ exports.data = {
     'Log progress': 'Loguj operaciju',
     'Messaging': 'Poruke',
     'Notification text': 'Tekst notifikacije',
+    'Open file manager modal': 'Prikaži fajl menadžer modal',
+    'File manager': 'Fajl menadžer',
     'Open test modal': 'Otvori modal',
     'Operation value (length)': 'Dužina operacija',
     'Reset user data': 'Resetuj korisničke podatke',
@@ -54,5 +56,6 @@ exports.data = {
     'User data': 'Korisnički podaci',
     'User message': 'Korisnička poruka',
     'log X {1}': 'loguj X {1}',
-    'operationStart': 'Startuj'
+    'operationStart': 'Startuj',
+    'Pass to main': 'Prosledi u glavnu skriptu'
 };

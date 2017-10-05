@@ -24,6 +24,8 @@ exports.data = {
     'Log progress': 'Log progress',
     'Messaging': 'Messaging',
     'Notification text': 'Notification text',
+    'File manager': 'File manager',
+    'Open file manager modal': 'Open file manager modal',
     'Open test modal': 'Open test modal',
     'Operation value (length)': 'Operation value (length)',
     'Reset user data': 'Reset user data',
