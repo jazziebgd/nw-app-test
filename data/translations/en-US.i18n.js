@@ -56,5 +56,9 @@ exports.data = {
     'User data': 'User data',
     'User message': 'User message',
     'log X {1}': 'log X {1}',
-    'operationStart': 'operationStart'
+    'operationStart': 'operationStart',
+    'Minimize section': 'Minimize section',
+    'Restore section': 'Restore section',
+    'Minimize all sections': 'Minimize all sections',
+    'Restore all sections': 'Restore all sections'
 };

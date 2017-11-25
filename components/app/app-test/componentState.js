@@ -180,6 +180,11 @@ exports.appState = {
             customNotification: false,
             customNotificationText: 'My notification',
 
+            initialSelectedFiles: {
+                items: [],
+                paths: ''
+            },
+
             animateTestModal: false,
             cancelOnCloseModal: false,
             autoCloseModal: false,

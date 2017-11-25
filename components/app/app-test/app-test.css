@@ -12,6 +12,8 @@
     margin: 5px auto;
     padding: 0px;
     font-size: 1.3rem;
+    width: 100%;
+    text-align: center;
 }
 
 .app-test-inner h2 {
@@ -230,6 +232,17 @@
     padding: 0 10px;
 }
 
+.file-manager-form-control-container {
+    display: flex;
+}
+
 .fm-modal-button {
     margin: 10px auto;
+}
+
+.toggle-all-sections {
+    float: right;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    margin-right: 10px;
 }

@@ -57,5 +57,9 @@ exports.data = {
     'User message': 'Korisnička poruka',
     'log X {1}': 'loguj X {1}',
     'operationStart': 'Startuj',
-    'Pass to main': 'Prosledi u glavnu skriptu'
+    'Pass to main': 'Prosledi u glavnu skriptu',
+    'Minimize section': 'Sakrij sekciju',
+    'Restore section': 'Prikaži sekciju',
+    'Minimize all sections': 'Sakrij sve sekcije',
+    'Restore all sections': 'Prikaži sve sekcije'
 };

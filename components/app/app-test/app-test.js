@@ -515,9 +515,30 @@ exports.component = {
                 this.minimizedSections[sectionIdentifier] = true;
             }
         },
+        toggleAllSections: function(){
+            let minimized = true;
+            if (this.allSectionsMinimized()){
+                minimized = false;
+            }
+            for (let sectionIdentifier in this.minimizedSections){
+                this.minimizedSections[sectionIdentifier] = minimized;
+            }
+        },
         toggleTransitionElement: function() {
             appState.appData.transitionData.elementShown = !appState.appData.transitionData.elementShown;
-        }
+        },
+        allSectionsMinimized: function(){
+            let result = true;
+            for (let sectionIdentifier in this.minimizedSections){
+                if (!this.minimizedSections[sectionIdentifier]){
+                    result = false;
+                }
+            }
+            return result;
+        },
+        fmControlChange: function(){
+            this.saveUserData();
+        },
     },
     computed: {
         appState: function(){

@@ -1,11 +1,18 @@
 <div class="app-test">
     <div class="app-test-inner">
-        <h1>{{ translate('Default app-test view') }}</h1>
+        <h1>
+            {{ translate('Default app-test view') }}
+            <a @click.prevent="toggleAllSections" class="toggle-all-sections">
+                <span v-if="allSectionsMinimized()" class="fa fa-plus restore" :title="translate('Restore all sections')"></span>
+                <span v-else class="fa fa-minus minimize" :title="translate('Minimize all sections')"></span>
+            </a>
+        </h1>
+
         <div class="app-test-section app-test-clear-data" :class="{'section-minimized': minimizedSections.clearData}" data-section="clearData">
             <h2>{{ translate('User data') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
-                <span class="fa fa-minus minimize"></span>
-                <span class="fa fa-plus restore"></span>
+                <span class="fa fa-minus minimize" :title="translate('Minimize section')"></span>
+                <span class="fa fa-plus restore" :title="translate('Restore section')"></span>
             </a>
             <div v-if="!minimizedSections.clearData" class="app-test-subsection">
                 {{ hasCustomData == 0 ? translate('There are no saved user data variables') : '' }}
@@ -18,8 +25,8 @@
         <div class="app-test-section app-test-message-test" :class="{'section-minimized': minimizedSections.messageTest}" data-section="messageTest">
             <h2>{{ translate('Test user messages, debug and notifications') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
-                <span class="fa fa-minus minimize"></span>
-                <span class="fa fa-plus restore"></span>
+                <span class="fa fa-minus minimize" :title="translate('Minimize section')"></span>
+                <span class="fa fa-plus restore" :title="translate('Restore section')"></span>
             </a>
             <div v-if="!minimizedSections.messageTest" class="app-test-subsection">
                 <label>{{ translate('Count')}}: </label>
@@ -78,8 +85,8 @@
         <div class="app-test-section app-test-operation-test" :class="{'section-minimized': minimizedSections.appOperation}" data-section="appOperation">
             <h2>{{ translate('Test app operation and statuses') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
-                <span class="fa fa-minus minimize"></span>
-                <span class="fa fa-plus restore"></span>
+                <span class="fa fa-minus minimize" :title="translate('Minimize section')"></span>
+                <span class="fa fa-plus restore" :title="translate('Restore section')"></span>
             </a>
             <div v-if="!minimizedSections.appOperation" class="app-test-subsection">
                 <div class="app-test-operation-info">
@@ -151,8 +158,8 @@
         <div class="app-test-section app-test-messaging" :class="{'section-minimized': minimizedSections.messaging}" data-section="messaging">
             <h2>{{ translate('Messaging') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
-                <span class="fa fa-minus minimize"></span>
-                <span class="fa fa-plus restore"></span>
+                <span class="fa fa-minus minimize" :title="translate('Minimize section')"></span>
+                <span class="fa fa-plus restore" :title="translate('Restore section')"></span>
             </a>
             <div v-if="!minimizedSections.messaging" class="app-test-subsection">
                 <input v-bind:class="{'button-disabled': messageInProgress }" type="button" @click.prevent="sendPingMessage" :value="translate('Send ping message')" />
@@ -173,8 +180,8 @@
         <div class="app-test-section app-test-transitions" :class="{'section-minimized': minimizedSections.transitions}" data-section="transitions">
             <h2>{{ translate('Transitions') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
-                <span class="fa fa-minus minimize"></span>
-                <span class="fa fa-plus restore"></span>
+                <span class="fa fa-minus minimize" :title="translate('Minimize section')"></span>
+                <span class="fa fa-plus restore" :title="translate('Restore section')"></span>
             </a>
             <div v-if="!minimizedSections.transitions" class="app-test-subsection">
                 <label>{{ translate('Transition') }}: </label>
@@ -213,8 +220,8 @@
         <div class="app-test-section app-test-modal-test" :class="{'section-minimized': minimizedSections.testModal}" data-section="testModal">
             <h2>{{ translate('Test modal') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
-                <span class="fa fa-minus minimize"></span>
-                <span class="fa fa-plus restore"></span>
+                <span class="fa fa-minus minimize" :title="translate('Minimize section')"></span>
+                <span class="fa fa-plus restore" :title="translate('Restore section')"></span>
             </a>
             <div v-if="!minimizedSections.testModal" class="app-test-subsection">
                 <label>
@@ -287,20 +294,22 @@
         <div class="app-test-section app-test-file-manager" :class="{'section-minimized': minimizedSections.fileManager}" data-section="fileManager">
             <h2>{{ translate('File manager') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
-                <span class="fa fa-minus minimize"></span>
-                <span class="fa fa-plus restore"></span>
+                <span class="fa fa-minus minimize" :title="translate('Minimize section')"></span>
+                <span class="fa fa-plus restore" :title="translate('Restore section')"></span>
             </a>
             <div v-if="!minimizedSections.fileManager" class="app-test-subsection">
                 <file-manager v-bind:options=" {rootDir: '/Users/dino/prg/node', currentDir: '/Users/dino/prg/node/nw/nw-app-example/test'}"></file-manager>
                 <input type="button" @click.prevent="openFileManagerModal" class="fm-modal-button" :value="translate('Open file manager modal')" />
+                <div class="file-manager-form-control-container">
+                    <file-manager-form-control v-bind:options="{}" v-bind:on-change="fmControlChange" v-model="initialSelectedFiles"></file-manager-form-control>
+                </div>
             </div>
-
         </div>
         <div class="app-test-section app-test-data" :class="{'section-minimized': minimizedSections.dataJson}" data-section="dataJson">
             <h2>{{ translate('Data inspector') }}</h2>
             <a @click.prevent="toggleSection" class="toggle-section">
-                <span class="fa fa-minus minimize"></span>
-                <span class="fa fa-plus restore"></span>
+                <span class="fa fa-minus minimize" :title="translate('Minimize section')"></span>
+                <span class="fa fa-plus restore" :title="translate('Restore section')"></span>
             </a>
             <div v-if="!minimizedSections.dataJson" class="app-test-subsection">
                 <div class="app-test-user-config">
